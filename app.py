@@ -12,21 +12,27 @@ logging.basicConfig(level=logging.DEBUG)
 def bot():
     incoming_num = request.values.get('From','')
     incoming_msg = request.values.get('Body', '').lower()
+
+    #logged the values to console to seall the values
+    print(request.values)
+    
     app.logger.info(incoming_msg)
     app.logger.info(incoming_num)
     resp = MessagingResponse()
     msg = resp.message()
-    responded = False
-    if 'quote' in incoming_msg:
-        #return request for quote
-        msg.body('You have requested a quote!')
-        responded = True
-    if 'cat' in incoming_msg:
-        # return a picture
-        msg.media('https://cataas.com/cat')
-        responded = True
-    if not responded:
-        msg.body('I only know about famous quotes and cats, sorry!')
+
+    if 'location: ' not in incoming_msg:
+        #return request if location: keyword is not included in the string
+        # placeholder to implement translation
+        msg.body('Include location in your message. Example: Saw a garbage dump on location: SP road.')
+
+    if 'location: ' in incoming_msg:
+        # return request if location: keyword is included in string
+        # placeholder toimplement translation
+        msg.body('Thanks for registering your complaint with us!')
+        # placeholder for sending get request to the main django service
+    
+    # return the response to the user
     return str(resp)
 
 
