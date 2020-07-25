@@ -2,10 +2,15 @@ from flask import Flask, request
 import logging
 import requests
 from twilio.twiml.messaging_response import MessagingResponse
+from googletrans import Translator
 
 app = Flask(__name__)
 
 logging.basicConfig(level=logging.DEBUG)
+
+def translator(message):
+    translator = Translator()
+    translator.translate(message)
 
 #POST route to fetch messages from WhatsApp
 @app.route('/bot', methods=['POST'])
@@ -21,12 +26,14 @@ def bot():
     resp = MessagingResponse()
     msg = resp.message()
 
-    if 'location' not in incoming_msg:
+    incoming_msg_translated = translator(incoming_msg) 
+
+    if 'location' or 'place' not in incoming_msg_translated:
         #return request if location: keyword is not included in the string
         # placeholder to implement translation
         msg.body('Include location in your message. Example: Saw a garbage dump on location SP road.')
 
-    if 'location' in incoming_msg:
+    if 'location' or 'place' in incoming_msg_translated:
         # return request if location: keyword is included in string
         # placeholder toimplement translation
         msg.body('Thanks for registering your complaint with us!')
