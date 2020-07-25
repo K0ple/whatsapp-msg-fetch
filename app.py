@@ -30,12 +30,14 @@ def bot():
         # return request if location: keyword is included in string
         # placeholder toimplement translation
         msg.body('Thanks for registering your complaint with us!')
+        # placeholder for sending get request to the main django service
         task = {"number": incoming_num, "description": incoming_msg }
+        print(task)
         # resp = requests.post('https://todolist.example.com/tasks/', json=task)
         # if resp.status_code != 201:
         #     raise ApiError('POST /tasks/ {}'.format(resp.status_code))
         # print('Created task. ID: {}'.format(resp.json()["id"]))
-        # placeholder for sending get request to the main django service
+        
     
     # return the response to the user
     return str(resp)
